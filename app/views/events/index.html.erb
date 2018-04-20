@@ -1,0 +1,127 @@
+<p style="margin-left:700px;"><a href="/users/<%=current_user.id%>">Edit My Profile</a> <a href="/users/logout">Logout</a></p>
+
+<h3>Welcome,
+    <%= current_user.first_name %>!</h3>
+
+<div class="events">
+    <h4>Here are some of the events at your state:</h4>
+    <table style="border:1px solid black" cellspacing='0'>
+        <tr>
+            <th style="border-right:1px solid black">Name</th>
+            <th style="border-right:1px solid black">Date</th>
+            <th style="border-right:1px solid black">Location</th>
+            <th style="border-right:1px solid black">Host</th>
+            <th style="border-right:1px solid black">Actions/Status</th>
+        </tr>
+        <% @events_usr.each do |e| %>
+            <tr>
+                <td style="border-right:1px solid black">
+                    <a href="/events/<%= e.id %>"><%= e.name %></a>
+                </td>
+                <td style="border-right:1px solid black">
+                    <%= e.date %>
+                </td>
+                <td style="border-right:1px solid black">
+                    <%= e.location %>
+                </td>
+                <td style="border-right:1px solid black">
+                    <%= User.find(e.user_id).first_name %>
+                </td>
+
+                <% if Event.find(e.id).users.exists?(current_user.id) %>
+                    <td style="border-right:1px solid black">
+                        <a style="margin-right: 10px;">Joining</a>
+                        <a href="/schedules/<%=e.id%>" data-method="delete">Cancel</a>     
+                    </td>
+                <% else %>
+                    <% if current_user != User.find(e.user_id) %>
+                        <td style="border-right:1px solid black">
+                        <a href="/schedules/<%=e.id%>" data-method="post">Join</a>     
+                        </td>
+                    <% else %>                
+                        <td style="border-right:1px solid black">
+                            <a href="/#/<%=e.id%>/edit">Edit</a> |
+                            <a href="/events/<%=e.id%>" data-method="delete">Delete</a>
+                        </td>
+                    <% end %>
+                <% end %>
+            </tr>
+        <% end %>
+    </table>
+
+
+    <h4>Here are some of the events on other states:</h4>
+    <table style="border:1px solid black" cellspacing='0'>
+        <tr>
+            <th style="border-right:1px solid black">Name</th>
+            <th style="border-right:1px solid black">Date</th>
+            <th style="border-right:1px solid black">Location</th>
+            <th style="border-right:1px solid black">State</th>
+            <th style="border-right:1px solid black">Host</th>
+            <th style="border-right:1px solid black">Actions</th>
+        </tr>
+        <% @events_oth.each do |e| %>
+            <tr>
+                <td style="border-right:1px solid black">
+                    <a href="/events/<%= e.id %>"><%= e.name %></a>
+                </td>
+                <td style="border-right:1px solid black">
+                    <%= e.date %>
+                </td>
+                <td style="border-right:1px solid black">
+                    <%= e.location %>
+                </td>
+                <td style="border-right:1px solid black">
+                    <%= e.state %>
+                </td>
+                <td style="border-right:1px solid black">
+                    <%= User.find(e.user_id).first_name %>
+                </td>
+                <% if Event.find(e.id).users.exists?(current_user.id) %>
+                    <td style="border-right:1px solid black">
+                        <a style="margin-right: 10px;">Joining</a>
+                        <a href="/schedules/<%=e.id%>" data-method="delete">Cancel</a>     
+                    </td>
+                <% else %>
+                    <% if current_user != User.find(e.user_id) %>
+                        <td style="border-right:1px solid black">
+                            <a href="/schedules/<%=e.id%>" data-method="post">Join</a>     
+                        </td>
+                    <% else %>
+                        <td style="border-right:1px solid black">
+                            <a href="/#/<%=e.id%>/edit">Edit</a> |
+                            <a href="/events/<%=e.id%>" data-method="delete">Delete</a>
+                        </td>
+                    <% end %>
+                 <% end %>
+            </tr>
+        <% end %>
+    </table>
+</div>
+
+<br>
+
+<h3>Add Event</h3>
+<form action="/events/create" method="post">
+    <input type='hidden' name="authenticity_token" value="<%=form_authenticity_token%>">
+    <div>
+        <label style="display:inline-block; width:100px;">Name:</label>
+        <input type="text" name="event[name]">
+    </div>
+
+    <div>
+        <label style="display:inline-block; width:100px;">Date:</label>
+        <input style="width:155px;" type="date" name="event[date]">
+    </div>
+
+    <div>
+        <label style="display:inline-block; width:100px;">Location:</label>
+        <input style="display:inline-block; width:107px;" type="text" name="event[location]">
+        <select name="event[state]">
+            <option value="WA">WA</option>
+            <option value="CA">CA</option>
+            <option value="NY">NY</option>
+        </select>
+    </div>
+    <input style="margin-left:160px;" type="submit" value="Add Event">
+</form>

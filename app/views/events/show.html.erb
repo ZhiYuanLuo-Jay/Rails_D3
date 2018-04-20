@@ -1,0 +1,50 @@
+<p style="margin-left:700px;"><a href="/events">Events Dashboard</a> <a href="/users/logout">Logout</a></p>
+<h2><%= @event.name %></h2>
+
+<br>
+<div class="info-left" style="display:inline-block; vertical-align:top; margin-left: 10px;">
+    <p>Host: <%= User.find(@event.user_id).first_name%> <%= User.find(@event.user_id).last_name%></p>
+    <p>Date: <%= (@event.date).strftime("%B %d, %Y %I:%M %p")%></p>
+    <p>Location: <%= @event.location %></p>
+    <p>People who are joining the event: <%= @people.size%> </p>
+
+    <table style="border:1px solid black" cellspacing='0'>
+        <tr>
+            <th style="border-right:1px solid black">Name</th>
+            <th style="border-right:1px solid black">Location</th>
+            <th style="border-right:1px solid black">State</th>
+        </tr>
+        <% @people.each do |p| %>
+            <tr>
+                <td style="border-right:1px solid black">
+                    <%= p.first_name%> <%= p.last_name%>
+                </td>
+                <td style="border-right:1px solid black">
+                    <%= p.location %>
+                </td>
+                <td style="border-right:1px solid black">
+                    <%= p.state %>
+                </td>
+            </tr>
+        <% end %>
+    </table>
+</div>
+
+<div class="info-right"  style="display:inline-block; vertical-align:top; margin-left: 50px;">
+    <h4>Disscusion about this event:</h4>
+    <br>
+    <div style="width: 383px; height: 200px; border: 1px solid black; overflow:auto;">
+        <% @comments.each do |c| %>        
+            <p><%= User.find(c.user_id).first_name%> Says: <%= c.comment %></p>
+            <p>..................................</p>
+        <% end %>
+    </div>
+    <h4>Add Comment:</h4>
+    <form action="/comments/<%= @event.id%>" method="post">
+        <input type='hidden' name="authenticity_token" value="<%=form_authenticity_token%>">
+        <textarea rows="4" cols="50" name="cmt[comment]"></textarea>
+        <br>
+        <input style="margin-left:250px;" type="submit" value="Submit Comments">
+    </form>
+
+</div>

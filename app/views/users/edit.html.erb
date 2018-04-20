@@ -1,0 +1,33 @@
+<p style="margin-left:700px;"><a href="/events">Events Dashboard</a> <a href="/users/logout">Logout</a></p>
+<h2>Edit Your Profile</h2>
+
+<form action='/users' method='post'>
+            <input type='hidden' name="authenticity_token" value="<%=form_authenticity_token%>">
+            <input type="hidden" name="_method" value="patch">
+            <div>
+                <label style="display:inline-block; width:100px;">First Name:</label>
+                <input type="text" name="user[first_name]" value="<%= current_user.first_name%>">
+            </div>
+
+            <div>
+                <label style="display:inline-block; width:100px;">Last Name:</label>
+                <input type="text" name="user[last_name]"  value="<%= current_user.last_name%>">
+            </div>
+
+            <div>
+                <label style="display:inline-block; width:100px;">Email:</label>
+                <input type="text" name="user[email]"  value="<%= current_user.email%>">
+            </div>
+
+            <div>
+                <label style="display:inline-block; width:100px;">Location:</label>
+                <input style="display:inline-block; width:107px;" type="text" name="user[location]"  value="<%= current_user.location%>">
+                <select name="user[state]">
+                    <option value="WA">WA</option>
+                    <option value="CA">CA</option>
+                    <option value="NY">NY</option>
+                </select>
+            </div>
+            <br>
+            <input style="margin-left:198px;" type="submit" value="Update Records">
+        </form>
