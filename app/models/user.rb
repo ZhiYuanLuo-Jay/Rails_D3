@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_secure_password
-  has_many :schedules
+  has_many :schedules, dependent: :destroy #
   has_many :comments, dependent: :destroy
   has_many :events, dependent: :destroy
   has_many :have_events, through: :schedules, source: :event
