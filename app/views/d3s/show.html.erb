@@ -1,0 +1,28 @@
+
+<% content_for :show_d3 do %>
+
+    <!-- Bootstrap grid setup -->
+    <div class="cont">
+        <div class="row">
+            <!-- Draw the circle, id = "area" -->
+            <div id="area"></div>
+            <hr>
+            <!-- Draw the line, rectangle, ellipse, using id = "more" -->
+            <div id="more"></div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Custom, External JS libraries -->
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true,  'data-turbolinks-suppress-warning'=> true  %>
+
+    <!-- Buildings inside svg, using data from Model -->       
+    <%= content_tag "div", id: "bld", data: {buildings: Building.all} do %>
+    <% end %>
+    <%= javascript_tag do %>
+        var bData = $('#bld').data('buildings');
+        process(bData);
+    <% end %>
+    
+<% end %>

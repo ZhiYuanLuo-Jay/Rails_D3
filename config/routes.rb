@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'd3s' => "d3s#show"
+
+  get 'd3s/proj1' => "d3s#proj1"
+
   get '/' => "users#index"
 
   get 'users/edit'

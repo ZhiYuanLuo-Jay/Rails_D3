@@ -6,15 +6,13 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
+
 <body>
 
 <% if flash[:errors] %>
   <% flash[:errors].each do |e| %>
     <%= e %>
   <% end %>
-<% end %>
-
-<% if current_user %>
 <% end %>
 
 <%= yield %>

@@ -39,6 +39,10 @@ group :development, :test do
   gem 'rspec'
   gem 'rails-footnotes', '>= 4.0.4', '<5'
   # rails generate rails_footnotes:install
+
+  # gem "d3-rails"
+  gem 'd3-rails', '~> 4.1'
+  
 end
 
 
