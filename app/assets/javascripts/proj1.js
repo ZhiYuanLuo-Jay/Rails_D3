@@ -91,7 +91,7 @@ function dispRevenue(myRe) {
     g.append("text")
         .attr("class", "y axis-label")
         .attr("x", -(height / 2))
-        .attr("y", -60)
+        .attr("y", -70)
         .attr("font-size", "20px")
         .attr("text-anchor", "middle")
         .attr("transform", "rotate(-90)")
